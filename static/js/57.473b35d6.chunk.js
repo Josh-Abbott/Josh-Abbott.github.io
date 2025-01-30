@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpersonal_website=self.webpackChunkpersonal_website||[]).push([[57],{57:(e,s,n)=>{n.r(s),n.d(s,{default:()=>t});n(43);var c=n(960);const t=function(){return(0,c.jsxs)("section",{id:"contact",className:"section",children:[(0,c.jsx)("h2",{children:"Contact"}),(0,c.jsx)("p",{children:"WORK IN PROGRESS"})]})}}}]);
+//# sourceMappingURL=57.473b35d6.chunk.js.map
