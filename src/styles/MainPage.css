@@ -1,0 +1,20 @@
+.main-section {
+    padding: 100px;
+    text-align: center;
+}
+
+.about {
+    background-color: #f9f9f9;
+}
+
+.skills {
+    background-color: #e9e9e9;
+}
+
+.projects {
+    background-color: #d9d9d9;
+}
+
+.contact {
+    background-color: #c9c9c9;
+}

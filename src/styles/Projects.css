@@ -1,0 +1,19 @@
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.project-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.1rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+  
+.project-link:hover {
+    color: #ff6600;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+  
