@@ -1,0 +1,33 @@
+.intro-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #f9f9f9;
+    color: #3f5277;
+    font-size: 2rem;
+  }
+  
+  .intro-text {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .scroll-indicator {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    opacity: 0.8;
+    animation: bounce 1.5s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+  }
+  
