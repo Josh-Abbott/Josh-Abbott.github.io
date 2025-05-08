@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkpersonal_website=self.webpackChunkpersonal_website||[]).push([[284],{284:(e,s,n)=>{n.r(s),n.d(s,{default:()=>i});n(43);var t=n(579);const i=function(){return(0,t.jsxs)("section",{id:"about",className:"section",children:[(0,t.jsx)("h2",{children:"About Me"}),(0,t.jsx)("p",{children:"Hello! I'm Josh, a passionate developer with an interest in ..."})]})}}}]);
-//# sourceMappingURL=284.2225d3cc.chunk.js.map
