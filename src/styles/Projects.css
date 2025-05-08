@@ -1,19 +1,93 @@
-.projects-list {
+.scrolling-wrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 20px;
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
 }
 
-.project-link {
+.scrolling-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 10px 0;
+    background: transparent;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in;
+}
+
+.scrolling-container.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scrolling-content {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite;
+    animation-play-state: paused;
+}
+
+.scrolling-container.visible .scrolling-content {
+    animation-play-state: running;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.scrolling-container:nth-child(2) .scrolling-content {
+    animation-delay: var(--delay);
+}
+.scrolling-container:nth-child(3) .scrolling-content {
+    animation-delay: var(--delay);
+}
+.scrolling-container:nth-child(4) .scrolling-content {
+    animation-delay: var(--delay);
+}
+.scrolling-container:nth-child(5) .scrolling-content {
+    animation-delay: var(--delay);
+}
+
+.project-title {
+    display: inline-block;
+    margin: 0 50px;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
     text-decoration: none;
-    color: #007bff;
-    font-size: 1.1rem;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
-}
+    white-space: nowrap;
+  }
   
-.project-link:hover {
-    color: #ff6600;
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
-}
+  .project-title:hover {
+    transform: scale(1.15);
+  }
   
+  .dot {
+    font-weight: bold;
+    color: white;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+  }
+  
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

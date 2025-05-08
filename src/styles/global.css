@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Orbitron:wght@400..900&display=swap');
 
 body {
     margin: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    color: white;
+    overflow-x: hidden;
 }
 
 html {
@@ -12,7 +12,6 @@ html {
 
 .section {
     padding: 80px 20px;
-    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -21,26 +20,25 @@ html {
 }
 
 .carlito-regular {
-    font-family: "Carlito", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .carlito-bold {
-    font-family: "Carlito", serif;
-    font-weight: 700;
-    font-style: normal;
-  }
-  
-  .carlito-regular-italic {
-    font-family: "Carlito", serif;
-    font-weight: 400;
-    font-style: italic;
-  }
-  
-  .carlito-bold-italic {
-    font-family: "Carlito", serif;
-    font-weight: 700;
-    font-style: italic;
-  }
-  
+  font-family: "Carlito", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.carlito-bold {
+  font-family: "Carlito", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.carlito-regular-italic {
+  font-family: "Carlito", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.carlito-bold-italic {
+  font-family: "Carlito", serif;
+  font-weight: 700;
+  font-style: italic;
+}

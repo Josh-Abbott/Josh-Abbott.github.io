@@ -2,21 +2,37 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #333;
     color: white;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.15);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+.navbar-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
   
+.navbar-hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
 .navbar-links {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 5px;
+    margin-left: 40px;
+    position: relative;
 }
-  
-.navbar-links a,
+
 .navbar-links button {
     text-decoration: none;
     background: none;
@@ -26,22 +42,32 @@
     font-weight: 500;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: font-size 0.2s ease, font-weight 0.2s ease;
+    position: relative;
 }
 
-.navbar-links a:hover,
-.navbar-links button:hover {
-    background-color: #555;
-    color: #ffcc00;
-    border-radius: 5px;
+.navbar-links button:hover,
+.navbar-links button.active {
+    font-size: 1.1rem;
+    font-weight: 600;
 }
-  
-@media (max-width: 600px) {
-    .navbar-links {
-        gap: 10px;
-    }
-    .navbar-links a,
-    .navbar-links button {
-        font-size: 0.9rem;
-    }
+
+.underline {
+    position: absolute;
+    bottom: -5px;
+    height: 2px;
+    background-color: black;
+    width: 0;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
 }
+
+.underline.visible {
+    opacity: 1;
+}
+
+.underline#underline-about { width: 60px; transform: translateX(0); }
+.underline#underline-skills { width: 65px; transform: translateX(80px); }
+.underline#underline-projects { width: 75px; transform: translateX(170px); }
+.underline#underline-contact { width: 70px; transform: translateX(270px); }
+

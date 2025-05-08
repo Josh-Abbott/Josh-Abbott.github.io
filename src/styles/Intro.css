@@ -1,33 +1,69 @@
 .intro-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: #f9f9f9;
-    color: #4f6796;
-    font-size: 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #f9f9f9;
+  color: #4f6796;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.zooming-text {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.snake-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.snake-background canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.glass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px) saturate(120%);
+  -webkit-backdrop-filter: blur(5px) saturate(120%);
+  background: rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.intro-text, .intro-text * {
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 5rem;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  transform-origin: 53.15% center;
+}
+
+@keyframes fadeOutIn {
+  0% {
+    opacity: 0;
   }
-  
-  .intro-text {
-    font-size: 3rem;
-    font-weight: bold;
+  50% {
+    opacity: 1;
   }
-  
-  .scroll-indicator {
-    margin-top: 20px;
-    font-size: 1.5rem;
-    opacity: 0.8;
-    animation: bounce 1.5s infinite;
+  100% {
+    opacity: 0;
   }
-  
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(10px);
-    }
-  }
-  
+}
+
