@@ -1,0 +1,14 @@
+.contact-icons {
+    margin-top: 20px;
+}
+
+.contact-icons a img {
+    width: 40px;
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+.contact-icons a img:hover {
+    transform: scale(1.1);
+}
+  

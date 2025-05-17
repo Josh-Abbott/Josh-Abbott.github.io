@@ -45,12 +45,16 @@ function MainPage({setShowNavbar}) {
         <section className="fade-in-section" id="about">
           <About />
         </section>
+        
+        <section className="fade-in-section" id="projects">
+          <Projects title="Software Projects" category="software" />
+          <Projects title="Game Projects" category="game" />
+        </section>
+        
         <section className="fade-in-section" id="skills">
           <Skills />
         </section>
-        <section className="fade-in-section" id="projects">
-          <Projects />
-        </section>
+        
         <section className="fade-in-section" id="contact">
           <Contact />
         </section>

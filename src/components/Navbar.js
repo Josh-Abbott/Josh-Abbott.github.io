@@ -49,16 +49,16 @@ function Navbar({ show }) {
           About
         </button>
         <button
-          className={activeSection === "skills" ? "active" : ""}
-          onClick={() => handleNavigation("skills")}
-        >
-          Skills
-        </button>
-        <button
           className={activeSection === "projects" ? "active" : ""}
           onClick={() => handleNavigation("projects")}
         >
           Projects
+        </button>
+        <button
+          className={activeSection === "skills" ? "active" : ""}
+          onClick={() => handleNavigation("skills")}
+        >
+          Skills
         </button>
         <button
           className={activeSection === "contact" ? "active" : ""}
@@ -67,7 +67,6 @@ function Navbar({ show }) {
           Contact
         </button>
       </div>
-      <div className={`underline ${activeSection ? "visible" : ""}`} style={{ left: `var(--underline-pos)` }}></div>
     </nav>
   );
 }

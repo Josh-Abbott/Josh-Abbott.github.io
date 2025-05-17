@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import projectsData from '../data/ProjectsData';
 import '../styles/Projects.css';
 
-function Projects() {
+function Projects({ title, category }) {
   const handleMouseEnter = (e) => {
     const content = e.target.closest('.project-title').closest('.scrolling-container').querySelector('.scrolling-content');
     if (content) {
@@ -32,9 +32,13 @@ function Projects() {
     });
   }, []);
 
+  const filteredProjects = projectsData.filter(
+    (project) => project.category === category
+  );
+
   return (
     <div className="section">
-      <h2>Projects</h2>
+      <h2>{title}</h2>
       <div className="scrolling-wrapper">
         {[...Array(5)].map((_, rowIndex) => (
           <div 
@@ -42,7 +46,7 @@ function Projects() {
             className="scrolling-container"
           >
             <div className="scrolling-content">
-              {[...projectsData, ...projectsData].map((project, index) => (
+              {[...filteredProjects, ...filteredProjects].map((project, index) => (
                 <React.Fragment key={index}>
                   <Link
                     to={`/projects/${project.id}`} 
@@ -64,3 +68,4 @@ function Projects() {
 }
 
 export default Projects;
+

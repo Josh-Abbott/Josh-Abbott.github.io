@@ -1,26 +1,9 @@
 section {
-    height: 100vh;
     justify-content: center;
     align-items: center;
     padding: 20px;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     background-color: inherit;
-}
-
-.about {
-    background-color: #4f6796;
-}
-
-.skills {
-    background-color: #4f6796;
-}
-
-.projects {
-    background-color: #4f6796;
-}
-
-.contact {
-    background-color: #4f6796;
 }
 
 .fade-in-section {

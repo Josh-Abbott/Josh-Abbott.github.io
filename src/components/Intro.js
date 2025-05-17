@@ -239,17 +239,15 @@ function Intro({setShowNavbar}) {
       if (scrollFraction > 0 && !zoomStarted) {
         setZoomStarted(true);
       }
-      
-      if (scrollFraction >= 1 && scrollLocked) {
-        // force move to fix weird scrolling issues
+  
+      if (scrollFraction >= 1 && scrollLocked) { // fix for scrolling too quick
         const element = document.getElementById("about");
-        if (element) {
-          element.scrollIntoView();
-        }
-        
+        if (element) element.scrollIntoView();
+  
         setShowNavbar(true);
-        setTimeout(setScrollLocked(false), 1000);
+        setTimeout(() => setScrollLocked(false), 1000);
         document.body.style.overflow = "";
+  
         window.removeEventListener("wheel", handleFakeScroll, { passive: false });
         window.removeEventListener("touchstart", handleTouchStart);
         window.removeEventListener("touchmove", handleTouchMove);
@@ -281,6 +279,19 @@ function Intro({setShowNavbar}) {
       updateZoom(scrollFraction);
     };
   
+    if (scrollLocked && window.scrollY > 100) { // detect if user loaded page midway
+      if (textEl) {
+        textEl.style.transform = `scale(${1 + 1 * 200})`;
+        textEl.style.transition = "transform 0.05s ease-out";
+      }
+  
+      setZoomStarted(true);
+      setScrollLocked(false);
+      setShowNavbar(true);
+      document.body.style.overflow = "";
+      return;
+    }
+  
     if (scrollLocked) {
       document.body.style.overflow = "hidden";
       window.addEventListener("wheel", handleFakeScroll, { passive: false });
@@ -294,6 +305,7 @@ function Intro({setShowNavbar}) {
       window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [scrollLocked, zoomStarted, setShowNavbar]);
+  
 
   useEffect(() => { // intro animation reset when scrolling back up
     if (!zoomStarted) return;
