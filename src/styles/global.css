@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Orbitron:wght@400..900&display=swap');
 
 body {
     margin: 0;
@@ -16,8 +16,10 @@ html {
 }
 
 * {
-    font-family: 'Carlito', sans-serif;
-}
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
 
 .button {
   color: white;
@@ -36,28 +38,4 @@ html {
 .button.active {
     font-size: 1.1rem;
     font-weight: 600;
-}
-
-.carlito-regular {
-  font-family: "Carlito", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.carlito-bold {
-  font-family: "Carlito", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.carlito-regular-italic {
-  font-family: "Carlito", serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.carlito-bold-italic {
-  font-family: "Carlito", serif;
-  font-weight: 700;
-  font-style: italic;
 }
