@@ -253,23 +253,30 @@ function Intro({ setShowNavbar }) {
         window.removeEventListener("touchmove", handleTouchMove);
       }
     
-      if (scrollDirection === 'up' && scrollFraction < 0.1) {
+      if (scrollDirection === 'up' && scrollFraction < 0.1 && zoomStarted) {
         setZoomStarted(false);
-      }
+      }      
     };    
+
+    let ticking = false;
 
     const handleFakeScroll = (e) => {
       if (!introEl || !textEl || !scrollLocked) return;
       e.preventDefault();
-    
-      const currentScrollY = fakeScrollY + e.deltaY;
-      const scrollDirection = currentScrollY < prevScrollY.current ? 'up' : 'down';
-      prevScrollY.current = currentScrollY;
-    
-      fakeScrollY = Math.max(0, currentScrollY);
+
+      fakeScrollY = Math.max(0, fakeScrollY + e.deltaY);
       const scrollFraction = Math.min(fakeScrollY / targetScrollDistance, 1);
-      updateZoom(scrollFraction, scrollDirection);
-    };       
+      const scrollDirection = fakeScrollY < prevScrollY.current ? 'up' : 'down';
+      prevScrollY.current = fakeScrollY;
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateZoom(scrollFraction, scrollDirection);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
     const handleTouchStart = (e) => {
       if (!scrollLocked) return;

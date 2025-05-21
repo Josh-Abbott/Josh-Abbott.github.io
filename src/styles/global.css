@@ -13,6 +13,8 @@ html {
 .section {
     padding: 80px 20px;
     margin: 0 auto;
+    max-width: 1200px;
+    position: relative;
 }
 
 * {

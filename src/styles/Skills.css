@@ -1,13 +1,36 @@
-.scrolling-wrapper {
+.skills-scrolling-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
     overflow: hidden;
     background: transparent;
+    padding: 0;
+}
+  
+.skills-scrolling-wrapper::before,
+.skills-scrolling-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    }
+
+.skills-scrolling-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(79, 103, 150, 0.9), transparent);
 }
 
-.scrolling-container {
+.skills-scrolling-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(79, 103, 150, 0.9), transparent);
+}
+
+.skills-scrolling-container {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
@@ -15,24 +38,19 @@
     padding: 10px 0;
     background: transparent;
     display: flex;
-    opacity: 0;
-    visibility: hidden;
+    visibility: visible;
+    opacity: 1;
     transition: opacity 0.8s ease-in;
 }
 
-.scrolling-container.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.scrolling-content {
+.skills-scrolling-content {
     display: flex;
     white-space: nowrap;
     animation: scroll-left 20s linear infinite;
     animation-play-state: paused;
 }
 
-.scrolling-container.visible .scrolling-content {
+.skills-scrolling-container.visible .skills-scrolling-content {
     animation-play-state: running;
 }
 
@@ -58,7 +76,7 @@
     animation-delay: var(--delay);
 }
 
-.project-title {
+.skills-title {
     display: inline-block;
     margin: 0 50px;
     font-size: 2rem;
@@ -70,19 +88,29 @@
     white-space: nowrap;
 }
   
-.project-title:hover {
-    transform: scale(1.15);
-    font-weight: 800;
-}
-  
-.dot {
-    font-weight: bold;
-    color: white;
-    font-size: 2rem;
-    display: flex;
+.skill-circle {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    color: white;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0 25px;
+    padding: 0 1.5rem;
+    height: 75px;
+    border-radius: 9999px;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    white-space: nowrap;
+}  
+
+.skill-circle:hover {
+    transform: scale(1.1);
 }
-  
 
 @keyframes fade-in {
     from {
