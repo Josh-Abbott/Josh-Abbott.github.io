@@ -247,6 +247,8 @@ function Intro({ setShowNavbar }) {
         setShowNavbar(true);
         setTimeout(() => setScrollLocked(false), 1000);
         document.body.style.overflow = "";
+
+        textEl.style.transform = "scale(1000)";
     
         window.removeEventListener("wheel", handleFakeScroll, { passive: false });
         window.removeEventListener("touchstart", handleTouchStart);
@@ -297,8 +299,7 @@ function Intro({ setShowNavbar }) {
     if (scrollLocked && window.scrollY > 100) {
       // detect if user loaded page midway
       if (textEl) {
-        textEl.style.transform = `scale(${1 + 1 * 200})`;
-        textEl.style.transition = "transform 0.05s ease-out";
+        textEl.style.transform = "scale(1000)";
       }
 
       setZoomStarted(true);
@@ -336,10 +337,15 @@ function Intro({ setShowNavbar }) {
       if (scrollingUp && isNearTop) {
         const textEl = textRef.current;
         if (textEl) {
-          textEl.style.transform = "scale(1)";
-          textEl.style.transition = "transform 0.5s ease-out";
+          textEl.style.transition = "none";
+          textEl.style.transform = "scale(201)";
+      
+          requestAnimationFrame(() => {
+            textEl.style.transition = "transform 0.5s ease-out";
+            textEl.style.transform = "scale(1)";
+          });
         }
-
+      
         setScrollLocked(true);
         setZoomStarted(false);
         setShowNavbar(false);

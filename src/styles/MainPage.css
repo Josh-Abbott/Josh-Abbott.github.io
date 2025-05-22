@@ -1,29 +1,21 @@
 section {
     justify-content: center;
     align-items: center;
-    padding: 20px;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     background-color: inherit;
 }
 
 .fade-in-section {
-    min-width: 100%;
-    overflow-x: hidden;
+    filter: blur(4px);
     opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    background-color: #4f6796;
-}
-
-.fade-in-section.visible {
+    transform: scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+  }
+  
+  .fade-in-section.visible {
+    filter: blur(0);
     opacity: 1;
-    transform: translateX(0);
-}
-
-.fade-in-section:not(.visible) {
-    opacity: 0;
-    transform: translateX(-50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
+    transform: scale(1);
+  }
+  
   

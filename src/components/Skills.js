@@ -36,7 +36,7 @@ function Skills() {
       <h2>Skills</h2>
       {Object.entries(groupedSkills).map(([type, skills]) => (
         <div key={type} className="skill-group">
-          <h3 className="skill-heading">{type}s</h3>
+          <h3 className="skill-heading">{type}</h3>
           <div className="skills-scrolling-wrapper">
             {[...Array(1)].map((_, rowIndex) => (
               <div 

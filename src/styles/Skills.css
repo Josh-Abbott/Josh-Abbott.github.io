@@ -63,19 +63,6 @@
     }
 }
 
-.scrolling-container:nth-child(2) .scrolling-content {
-    animation-delay: var(--delay);
-}
-.scrolling-container:nth-child(3) .scrolling-content {
-    animation-delay: var(--delay);
-}
-.scrolling-container:nth-child(4) .scrolling-content {
-    animation-delay: var(--delay);
-}
-.scrolling-container:nth-child(5) .scrolling-content {
-    animation-delay: var(--delay);
-}
-
 .skills-title {
     display: inline-block;
     margin: 0 50px;
