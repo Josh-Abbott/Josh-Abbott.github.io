@@ -64,15 +64,6 @@ const projectsData = [
         { type: "image", value: "../images/testing2.jpg", alt: "Project 1 screenshot" },
       ],
     },
-    {
-      id: 8,
-      title: "Another Placeholder Here?",
-      category: "game",
-      content: [
-        { type: "text", value: "This project is a work in progress." },
-        { type: "image", value: "../images/testing2.jpg", alt: "Project 1 screenshot" },
-      ],
-    },
   ];
   
   export default projectsData;

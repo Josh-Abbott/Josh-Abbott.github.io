@@ -220,7 +220,7 @@ function Intro({ setShowNavbar }) {
       window.removeEventListener("resize", updateCanvasSize);
     };
   }, []);
-
+  
   useEffect(() => {
     // intro animation
     let fakeScrollY = 0;
@@ -296,19 +296,6 @@ function Intro({ setShowNavbar }) {
       updateZoom(scrollFraction);
     };    
 
-    if (scrollLocked && window.scrollY > 100) {
-      // detect if user loaded page midway
-      if (textEl) {
-        textEl.style.transform = "scale(1000)";
-      }
-
-      setZoomStarted(true);
-      setScrollLocked(false);
-      setShowNavbar(true);
-      document.body.style.overflow = "";
-      return;
-    }
-
     if (scrollLocked) {
       document.body.style.overflow = "hidden";
       window.addEventListener("wheel", handleFakeScroll, { passive: false });
@@ -354,6 +341,26 @@ function Intro({ setShowNavbar }) {
     window.addEventListener("scroll", handleScrollBack);
     return () => window.removeEventListener("scroll", handleScrollBack);
   }, [zoomStarted, setShowNavbar]);
+
+  useEffect(() => { // resolve mid page loading intro issue
+    const timeout = setTimeout(() => {
+      if (scrollLocked && window.scrollY > 100) {
+        const textEl = textRef.current;
+        
+        if (textEl) {
+          textEl.style.transform = "scale(1000)";
+        }
+
+        setShowNavbar(true);
+        setScrollLocked(false);
+        setZoomStarted(true);
+        document.body.style.overflow = "";
+      }
+    }, 100);
+  
+    return () => clearTimeout(timeout);
+  }, []);
+  
   
   // typing animation (and overlays + background)
   return (

@@ -49,18 +49,15 @@
 
 .intro-text, .intro-text * {
   font-family: 'Orbitron', sans-serif !important;
-  font-size: 5rem;
   font-weight: bold;
   position: relative;
   z-index: 2;
   transform-origin: 53.15% center;
+  white-space: nowrap;
+  display: inline-block;
+  font-size: clamp(1.5rem, 8vw, 5rem);
 }
 
-@media (max-width: 668px) {
-  .intro-text, .intro-text * {
-    transform-origin: 54.75% 20%;
-  }
-}
 
 @keyframes fadeOutIn {
   0% {

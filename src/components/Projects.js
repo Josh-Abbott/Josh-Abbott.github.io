@@ -40,7 +40,7 @@ function Projects({ title, category }) {
     <div className="section">
       <h2>{title}</h2>
       <div className="scrolling-wrapper">
-        {[...Array(5)].map((_, rowIndex) => (
+        {[...Array(3)].map((_, rowIndex) => (
           <div 
             key={rowIndex} 
             className="scrolling-container"
