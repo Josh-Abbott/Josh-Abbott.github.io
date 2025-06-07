@@ -12,7 +12,7 @@ function App() {
       <Navbar show={showNavbar} />
       <Routes>
         <Route path="/" element={<MainPage setShowNavbar={setShowNavbar} />} />
-        <Route path="/projects/:projectId" element={<ProjectInfo />} />
+        <Route path="/projects/:projectId" element={<ProjectInfo setShowNavbar={setShowNavbar} />} />
       </Routes>
     </Router>
   );

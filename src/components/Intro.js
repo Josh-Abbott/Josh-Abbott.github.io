@@ -228,27 +228,29 @@ function Intro({ setShowNavbar }) {
     const introEl = introRef.current;
     const textEl = textRef.current;
 
-    const targetScrollDistance = 2000;
+    const targetScrollDistance = 1000;
 
     const updateZoom = (scrollFraction, scrollDirection) => {
-      const easedFraction = scrollFraction ** 3;
+      const easedFraction = scrollFraction ** 5;
       const scale = 1 + easedFraction * 200;
       textEl.style.transform = `scale(${scale})`;
-      textEl.style.transition = "transform 0.05s ease-out";
+      textEl.style.transition = "transform 0.1s ease-out";
     
       if (scrollFraction > 0 && !zoomStarted) {
         setZoomStarted(true);
       }
     
-      if (scrollFraction >= 1 && scrollLocked) { // fix for scrolling too quick
+      if (scrollFraction >= 1 && scrollLocked) { // when finished
         const element = document.getElementById("about");
-        if (element) element.scrollIntoView();
-    
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+      
         setShowNavbar(true);
-        setTimeout(() => setScrollLocked(false), 1000);
-        document.body.style.overflow = "";
-
         textEl.style.transform = "scale(1000)";
+      
+        setTimeout(() => { // prevent over scrolling
+          document.body.style.overflow = "";
+          setScrollLocked(false);
+        }, 1000);   
     
         window.removeEventListener("wheel", handleFakeScroll, { passive: false });
         window.removeEventListener("touchstart", handleTouchStart);
@@ -328,7 +330,7 @@ function Intro({ setShowNavbar }) {
           textEl.style.transform = "scale(201)";
       
           requestAnimationFrame(() => {
-            textEl.style.transition = "transform 0.5s ease-out";
+            textEl.style.transition = "transform 0.1s ease-out";
             textEl.style.transform = "scale(1)";
           });
         }
@@ -356,7 +358,7 @@ function Intro({ setShowNavbar }) {
         setZoomStarted(true);
         document.body.style.overflow = "";
       }
-    }, 100);
+    }, 1000);
   
     return () => clearTimeout(timeout);
   }, []);

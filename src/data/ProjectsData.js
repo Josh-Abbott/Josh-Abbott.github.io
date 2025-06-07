@@ -26,6 +26,7 @@ const projectsData = [
       content: [
         { type: "text", value: "This project is a work in progress." },
         { type: "image", value: "../images/testing2.jpg", alt: "Project 1 screenshot" },
+        { type: "focused-text", value: "This MEGA is a work in progress." },
       ],
     },
     {
@@ -53,6 +54,7 @@ const projectsData = [
       content: [
         { type: "text", value: "This project is a work in progress." },
         { type: "image", value: "../images/testing2.jpg", alt: "Project 1 screenshot" },
+        { type: "video", value: "../videos/shoppinglist.mp4", alt: "Shopping List Minigame video" },
       ],
     },
     {

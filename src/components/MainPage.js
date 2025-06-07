@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Intro from "./Intro";
 import "../styles/MainPage.css";
 
@@ -37,6 +38,24 @@ function MainPage({setShowNavbar}) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const location = useLocation();
+
+  useEffect(() => { // SCROLL IF USED NAVBAR
+    setShowNavbar(false);
+
+    if (location.hash) {
+      const sectionId = location.hash.substring(1);
+      const scrollToSection = () => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      };
+
+      setTimeout(scrollToSection, 100); 
+    }
+  }, [location, setShowNavbar]);
 
   return (
     <>

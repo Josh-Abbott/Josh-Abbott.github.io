@@ -17,6 +17,7 @@
   will-change: transform;
   transform-origin: center center;
   transform: translateZ(0);
+  will-change: transform;
 }
 
 .snake-background {

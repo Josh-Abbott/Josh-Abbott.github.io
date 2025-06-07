@@ -28,7 +28,7 @@ function About() {
       <p>I'm a software engineer passionate about learning and pursuing creative endeavors.</p>
       <p>For over a decade now, I've dedicated much of my time to developing virtual experiences hosted on the platform Roblox that millions have played. This hobby of mine quickly evolved into a deep investment that would result in the pursuit of a formal education in programming. </p>
       <p>Since then, I've also taken a substantial interest in web development, using my education and projects such as this website in order to expand my knowledge of it. I'm constantly learning, taking any opportunity I can to expand my skillset and bring new visions to life.</p>
-      <p>When I’m not at my computer I like to spend my time reading and writing or hanging out with my cat.</p>
+      <p>When I’m not at my computer, I like to spend my time reading, writing, or hanging out with my cat.</p>
       <br></br>
       <button
           className={"button"}
