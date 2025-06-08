@@ -17,7 +17,7 @@ const generateRandomTarget = () => {
   ];
 };
 
-function Intro({ setShowNavbar }) {
+function Intro({ setShowNavbar, autoCompleteIntro }) {
   const canvasRef = useRef(null);
   const snakeRef = useRef([...INITIAL_SNAKE]);
   const targetRef = useRef(generateRandomTarget());
@@ -297,6 +297,24 @@ function Intro({ setShowNavbar }) {
       const scrollFraction = Math.min(fakeScrollY / targetScrollDistance, 1);
       updateZoom(scrollFraction);
     };    
+    
+    if (autoCompleteIntro && scrollLocked) { // reload mid page fix
+      const textEl = textRef.current;
+
+      if (textEl) {
+        textEl.style.transform = "scale(1000)";
+        textEl.style.transition = "transform 0.1s ease-out";
+      }
+
+      setShowNavbar(true);
+      setScrollLocked(false);
+      setZoomStarted(true);
+      document.body.style.overflow = "";
+
+      window.removeEventListener("wheel", handleFakeScroll);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    }
 
     if (scrollLocked) {
       document.body.style.overflow = "hidden";
@@ -310,7 +328,7 @@ function Intro({ setShowNavbar }) {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [scrollLocked, zoomStarted, setShowNavbar]);
+  }, [scrollLocked, zoomStarted, setShowNavbar, autoCompleteIntro]);
 
   useEffect(() => { // intro animation reset when scrolling back up
     if (!zoomStarted) return;
@@ -330,7 +348,7 @@ function Intro({ setShowNavbar }) {
           textEl.style.transform = "scale(201)";
       
           requestAnimationFrame(() => {
-            textEl.style.transition = "transform 0.1s ease-out";
+            textEl.style.transition = "transform 0.3s ease-out";
             textEl.style.transform = "scale(1)";
           });
         }

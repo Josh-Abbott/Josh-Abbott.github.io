@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Intro from "./Intro";
 import "../styles/MainPage.css";
@@ -8,7 +8,10 @@ const Skills = lazy(() => import("./Skills"));
 const Projects = lazy(() => import("./Projects"));
 const Contact = lazy(() => import("./Contact"));
 
-function MainPage({setShowNavbar}) {
+function MainPage({setShowNavbar }) {
+  const location = useLocation();
+  const [autoCompleteIntro, setAutoCompleteIntro] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       requestAnimationFrame(() => {
@@ -39,11 +42,14 @@ function MainPage({setShowNavbar}) {
     };
   }, []);
 
-  const location = useLocation();
+  useEffect(() => {
+    // If navigating directly to a section (via navbar click), force intro completion
+    if (location.hash) {
+      setAutoCompleteIntro(true);
+    }
+  }, [location]);
 
-  useEffect(() => { // SCROLL IF USED NAVBAR
-    setShowNavbar(false);
-
+  useEffect(() => {
     if (location.hash) {
       const sectionId = location.hash.substring(1);
       const scrollToSection = () => {
@@ -53,13 +59,14 @@ function MainPage({setShowNavbar}) {
         }
       };
 
-      setTimeout(scrollToSection, 100); 
+      // Wait a bit to allow intro completion
+      setTimeout(scrollToSection, 300); 
     }
-  }, [location, setShowNavbar]);
+  }, [location]);
 
   return (
     <>
-      <Intro setShowNavbar={setShowNavbar} />
+      <Intro setShowNavbar={setShowNavbar} autoCompleteIntro={autoCompleteIntro} />
       <Suspense fallback={<div>Loading...</div>}>
         <section className="fade-in-section" id="about">
           <About />
