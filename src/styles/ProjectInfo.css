@@ -4,60 +4,73 @@
     background: #4f6796;
     color: #fff;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
+}
   
-  .project-info h1 {
+.project-info h1 {
     margin-bottom: 40px;
     font-size: 2rem;
     text-align: center;
-  }
+}
   
-  .project-text {
+.project-text {
     font-size: 1.1rem;
     line-height: 1.7;
     margin-bottom: 20px;
     word-break: break-word;
-  }
+}
   
-  .project-text a {
-    color: #ffdd57;
-    text-decoration: underline;
-  }
-  
-  .project-text a:hover {
-    color: #ffc107;
-  }
-  
-  .focused-text {
+.focused-text {
     font-size: 1.2rem;
     line-height: 1.8;
     margin: 40px auto;
     width: 90%;
     max-width: 800px;
     text-align: center;
-  }
-  
-  .project-image {
+}
+
+.focused-text a {
+    color: #aad4ff;
+    text-decoration: none;
+    border-bottom: 2px solid #aad4ff;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.focused-text a:hover {
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.project-image {
     width: 100%;
     max-width: 800px;
     display: block;
     margin: 40px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+}
   
-  .project-video {
+.project-video {
     display: flex;
     justify-content: center;
     margin: 40px 0;
-  }
+}
   
-  .project-video iframe {
+.project-video iframe {
     width: 100%;
     max-width: 700px;
     aspect-ratio: 16 / 9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-video-element {
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: block;
+    margin: 40px auto;
   }
-  
   
