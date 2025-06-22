@@ -18,11 +18,24 @@
     margin-bottom: 20px;
     word-break: break-word;
 }
+
+.project-text a {
+    color: #aad4ff;
+    text-decoration: none;
+    border-bottom: 2px solid #aad4ff;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.project-text a:hover {
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
   
 .focused-text {
     font-size: 1.2rem;
     line-height: 1.8;
-    margin: 40px auto;
+    margin: 20px auto 40px;
     width: 90%;
     max-width: 800px;
     text-align: center;
@@ -45,15 +58,14 @@
     width: 100%;
     max-width: 800px;
     display: block;
-    margin: 40px auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px auto 20px;
 }
   
 .project-video {
     display: flex;
     justify-content: center;
-    margin: 40px 0;
 }
   
 .project-video iframe {
@@ -71,6 +83,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: block;
-    margin: 40px auto;
-  }
+    margin: 20px auto 20px;
+}
   
