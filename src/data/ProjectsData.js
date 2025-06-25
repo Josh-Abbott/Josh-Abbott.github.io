@@ -100,6 +100,7 @@ const projectsData = [
         { type: "text", value: "• Co-developed and marketed a multiplayer roleplay game set in an interactive virtual resort, where users engage in time-based activities and simulated job experiences." },
         { type: "text", value: "• Created a Lua-based currency system that incentivized longer play sessions by rewarding time and enabling purchases of in-game items and activities." },
         { type: "text", value: "• Designed systems simulating resort employee roles such as check-ins and housekeeping for up to 50 concurrent players." },
+        { type: "video", value: "../videos/solanasdemo.mp4", alt: "Project demo video." },
         { type: "text", value: "• Implemented monetized in-game purchases that generated over $10,000 in platform revenue." },
         { type: "text", value: "• Led a team of 3–4 core developers and managed external contributors across modeling, graphics, and other assets over a 2-year development cycle." },
         { type: "text", value: "• Boosted ad clickthrough rates by up to 50% through A/B testing and analysis of millions of platform impressions." },
