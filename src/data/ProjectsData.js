@@ -65,6 +65,9 @@ const projectsData = [
       title: "The City of Palm Bay",
       category: "game",
       content: [
+        { type: "image", value: "../images/palmbay.jpg", alt: "Project screenshot." },
+        { type: "focused-text", value: "Image taken from developer tools." },
+        { type: "text", value: "A systems-driven multiplayer roleplay game simulating a living town economy and political ecosystem, designed with modular Lua architecture to support emergent gameplay, real-time legislation, and evolving player agency." },
         { type: "text", value: "•	Co-developed an online multiplayer roleplaying game simulating a player-driven town economy and government, where users work jobs, earn currency, and influence how the town operates through social and political systems." },
         { type: "text", value: "•	Engineered a Lua-based virtual economy system supporting up to 50 concurrent players, enabling competitive job mechanics across six dynamic businesses with real-time wage payouts and financial persistence." },
         { type: "video", value: "../videos/palmdemo.mp4", alt: "Project gameplay demo video." },
@@ -79,7 +82,9 @@ const projectsData = [
       title: "Destiny Bay",
       category: "game",
       content: [
+        { type: "image", value: "../images/destinybay.jpg", alt: "Project screenshot." },
         { type: "focused-text", value: "All content showcased is from a work-in-progress build and not final." },
+        { type: "text", value: "An online multiplayer game set in a large, explorable city where players engage in roleplay and competitive minigames. Designed and implemented modular systems—including a real-time in-game store, XP and currency economy, and scalable multiplayer minigames—to support dynamic gameplay, and emergent player interaction." },
         { type: "text", value: "• Co-developed an online multiplayer game set in a large-scale virtual city, featuring minigames, roleplay mechanics, and interactive experiences across various zones." },
         { type: "text", value: "• Designed a modular in-game store system with 75+ item types, supporting live updates across all servers — including price changes, removals, and time-limited offers — without requiring code redeployment or downtime." },
         { type: "video", value: "../videos/destinydemo1.mp4", alt: "Project shop demo video." },
@@ -87,7 +92,6 @@ const projectsData = [
         { type: "text", value: "• Built a scalable minigame framework supporting up to 20 players per instance, enabling competitive games like tag and reward-based challenges to enhance replayability." },
         { type: "video", value: "../videos/destinydemo2.mp4", alt: "Shopping List Minigame video." },
         { type: "focused-text", value: "The 'Shopping List' minigame challenges players to collect the highest number of items before time runs out; this demo is shown with one player for clarity." }
-
       ],
     },
     {
@@ -97,6 +101,7 @@ const projectsData = [
       content: [
         { type: "image", value: "../images/solanasresort2.jpg", alt: "Project 1st screenshot." },
         { type: "focused-text", value: "Image taken from developer tools." },
+        { type: "text", value: "A multiplayer virtual resort roleplay game where players work jobs, customize experiences, and engage with time-based and social systems. Over 2 million users played and interacted with the economy, jobs, and simulated environment." },
         { type: "text", value: "• Co-developed and marketed a multiplayer roleplay game set in an interactive virtual resort, where users engage in time-based activities and simulated job experiences." },
         { type: "text", value: "• Created a Lua-based currency system that incentivized longer play sessions by rewarding time and enabling purchases of in-game items and activities." },
         { type: "text", value: "• Designed systems simulating resort employee roles such as check-ins and housekeeping for up to 50 concurrent players." },
