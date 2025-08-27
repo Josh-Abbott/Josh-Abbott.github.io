@@ -30,7 +30,6 @@ const projectsData = [
       content: [
         { type: "text", value: "• Created a Python application to query and analyze large-scale Yelp data using PostgreSQL, implementing JSON parsing, database schema design, and query optimization strategies to provide location-based business insights." },
         { type: "text", value: "• Designed and implemented popularity and success ranking algorithms for businesses, using custom metrics such as check-in patterns, review consistency, and business longevity." },
-        { type: "image", value: "../images/testing2.jpg", alt: "Project 1 screenshot" },
         { type: "video", value: "../videos/yelpapp.mp4", alt: "Spreadsheet Application demo video." },
         { type: "focused-text", value: 'Check out the <a href="https://github.com/Josh-Abbott/Yelp-Database" target="_blank" rel="noopener noreferrer">GitHub repository</a> for this project.' },
       ],
