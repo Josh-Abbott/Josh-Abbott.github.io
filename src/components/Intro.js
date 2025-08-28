@@ -304,6 +304,9 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
           });
         }
 
+        fakeScrollYRef.current = 0;
+        prevFakeScrollYRef.current = 0;
+
         setScrollLocked(true);
         setZoomStarted(false);
         setShowNavbar(false);
