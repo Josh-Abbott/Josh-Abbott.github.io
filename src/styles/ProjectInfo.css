@@ -4,6 +4,7 @@
     background: #4f6796;
     color: #fff;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    flex-grow: 1;
 }
   
 .project-info h1 {
