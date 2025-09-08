@@ -7,7 +7,7 @@ const GRID_WIDTH = 40;
 const GRID_HEIGHT = 30;
 const CELL_SIZE = 40;
 const SPEED = 75;
-const INITIAL_SNAKE = [[10, 10], [9, 10], [8, 10]]; // can randomize?
+const INITIAL_SNAKE = [[10, 10], [9, 10], [8, 10]];
 
 const generateRandomTarget = () => {
   const buffer = 6;
@@ -34,9 +34,10 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
   const lastUpdateTimeRef = useRef(0);
   const animationFrameIdRef = useRef();
 
-  const getTarget = () => targetRef.current;
-
   const [introState, setIntroState] = useState("TYPING");
+  const [enableSnake, setEnableSnake] = useState(true);
+
+  const getTarget = () => targetRef.current;
 
   // breadth first search algorithm for pathfinding
   const bfs = (start, goal, body) => {
@@ -74,7 +75,37 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
     return null;
   };
 
+  // performance testing, might add for zoom
   useEffect(() => {
+    let frameCount = 0;
+    let startTime = performance.now();
+
+    const fpsCheck = (now) => {
+      frameCount++;
+      if (now - startTime < 1000) {
+        requestAnimationFrame(fpsCheck);
+      } else {
+        const fps = (frameCount * 1000) / (now - startTime);
+
+        const lowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
+        const lowThreads =
+          navigator.hardwareConcurrency &&
+          navigator.hardwareConcurrency < 4;
+
+        if (fps < 40 || lowMemory || lowThreads) {
+          setEnableSnake(false);
+        } else {
+          setEnableSnake(true);
+        }
+      }
+    };
+
+    requestAnimationFrame(fpsCheck);
+  }, []);
+
+  useEffect(() => {
+    if (!enableSnake) return; // skip if disabled now
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
@@ -135,7 +166,9 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
         let newTarget;
         do {
           newTarget = generateRandomTarget();
-        } while (snake.some(([sx, sy]) => sx === newTarget[0] && sy === newTarget[1]));
+        } while (
+          snake.some(([sx, sy]) => sx === newTarget[0] && sy === newTarget[1])
+        );
 
         targetRef.current = newTarget;
 
@@ -154,45 +187,63 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
         targetsEaten = 0;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Redraw for fade in
+
+        // redraw (fading in)
         const offset = offsetRef.current;
         for (let [x, y] of snakeRef.current) {
-            ctx.fillStyle = "rgba(79, 103, 150, 0.6)";
-            ctx.fillRect(offset.x + x * CELL_SIZE, offset.y + y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+          ctx.fillStyle = "rgba(79, 103, 150, 0.6)";
+          ctx.fillRect(
+            offset.x + x * CELL_SIZE,
+            offset.y + y * CELL_SIZE,
+            CELL_SIZE,
+            CELL_SIZE
+          );
         }
         const [tx, ty] = getTarget();
         ctx.strokeStyle = "#4f6796";
         ctx.lineWidth = 2;
-        ctx.strokeRect(offset.x + tx * CELL_SIZE, offset.y + ty * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-        
+        ctx.strokeRect(
+          offset.x + tx * CELL_SIZE,
+          offset.y + ty * CELL_SIZE,
+          CELL_SIZE,
+          CELL_SIZE
+        );
+
         await fadeCanvas(false);
         isResetting = false;
         return;
       }
-      
-      // Drawing logic
+
+      // drawing the snake
       const offset = offsetRef.current;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let [x, y] of snake) {
         ctx.fillStyle = "rgba(79, 103, 150, 0.6)";
-        ctx.fillRect(offset.x + x * CELL_SIZE, offset.y + y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        ctx.fillRect(
+          offset.x + x * CELL_SIZE,
+          offset.y + y * CELL_SIZE,
+          CELL_SIZE,
+          CELL_SIZE
+        );
       }
-      
+
       const [tx, ty] = getTarget();
       ctx.strokeStyle = "#4f6796";
       ctx.lineWidth = 2;
-      ctx.strokeRect(offset.x + tx * CELL_SIZE, offset.y + ty * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+      ctx.strokeRect(
+        offset.x + tx * CELL_SIZE,
+        offset.y + ty * CELL_SIZE,
+        CELL_SIZE,
+        CELL_SIZE
+      );
     };
 
     const gameLoop = (timestamp) => {
-      // check if enough time has passed to match the desired speed
       if (timestamp - lastUpdateTimeRef.current >= SPEED) {
         lastUpdateTimeRef.current = timestamp;
-        moveSnake(); // update snake
+        moveSnake();
       }
-      // request the next frame to continue loop
       animationFrameIdRef.current = requestAnimationFrame(gameLoop);
     };
 
@@ -200,18 +251,16 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
     window.addEventListener("resize", updateCanvasSize);
     canvas.style.opacity = 1;
     canvas.style.transition = "opacity 0.5s ease-in-out";
-    
-    // start the animation loop instead of setting an interval
+
     animationFrameIdRef.current = requestAnimationFrame(gameLoop);
 
     return () => {
-      // stop the animation loop
       cancelAnimationFrame(animationFrameIdRef.current);
       window.removeEventListener("resize", updateCanvasSize);
     };
-  }, []);
-  
-  useEffect(() => {
+  }, [enableSnake]);
+
+useEffect(() => {
     // intro animation
     let fakeScrollY = 0;
     let touchStartY = 0;
@@ -370,16 +419,14 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
   
     return () => clearTimeout(timeout);
   }, []);
-  
-  
-  // typing animation (and overlays + background)
+
   return (
     <div className="intro-container" ref={introRef}>
       <div className="snake-background">
-        <canvas ref={canvasRef} />
+        {enableSnake && <canvas ref={canvasRef} />} 
         <div className="glass-overlay" />
       </div>
-  
+
       <motion.div
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
@@ -401,7 +448,8 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
         </h1>
       </motion.div>
     </div>
-  );    
-};
+  );
+}
 
 export default Intro;
+
