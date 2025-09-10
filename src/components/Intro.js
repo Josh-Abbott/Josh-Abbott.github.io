@@ -34,10 +34,14 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
   const lastUpdateTimeRef = useRef(0);
   const animationFrameIdRef = useRef();
 
-  const [introState, setIntroState] = useState("TYPING");
+  const [introComplete, setIntroComplete] = useState(false);
   const [enableSnake, setEnableSnake] = useState(true);
 
   const getTarget = () => targetRef.current;
+
+  useEffect(() => {
+    setEnableSnake(!introComplete);
+  }, [introComplete]);
 
   // breadth first search algorithm for pathfinding
   const bfs = (start, goal, body) => {
@@ -103,8 +107,9 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
     requestAnimationFrame(fpsCheck);
   }, []);
 
+  // Snake game loop
   useEffect(() => {
-    if (!enableSnake) return; // skip if disabled now
+    if (!enableSnake) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -134,7 +139,7 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
       });
     };
 
-    const moveSnake = async () => {
+     const moveSnake = async () => {
       if (isResetting) return;
 
       const snake = snakeRef.current;
@@ -260,7 +265,7 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
     };
   }, [enableSnake]);
 
-useEffect(() => {
+  useEffect(() => {
     // intro animation
     let fakeScrollY = 0;
     let touchStartY = 0;
@@ -272,44 +277,53 @@ useEffect(() => {
     const updateZoom = (scrollFraction, scrollDirection) => {
       const easedFraction = scrollFraction ** 5;
       const scale = 1 + easedFraction * 200;
-      textEl.style.transform = `scale(${scale})`;
-      textEl.style.transition = "transform 0.1s ease-out";
-    
+
+      if (textEl) {
+        textEl.style.transform = `scale(${scale})`;
+        textEl.style.transition = "transform 0.1s ease-out";
+      }
+
       if (scrollFraction > 0 && !zoomStarted) {
         setZoomStarted(true);
       }
-    
-      if (scrollFraction >= 1 && scrollLocked) { // when finished
+
+      if (scrollFraction >= 1 && scrollLocked) {
         const element = document.getElementById("about");
         if (element) element.scrollIntoView({ behavior: "smooth" });
-      
+
         setShowNavbar(true);
-        textEl.style.transform = "scale(1000)";
-      
-        setTimeout(() => { // prevent over scrolling
+
+        introRef.current.classList.add("intro-complete");
+
+        setTimeout(() => {
+          setIntroComplete(true);
+        }, 250); // enough to trigger transition
+
+        setTimeout(() => {
           document.body.style.overflow = "";
           setScrollLocked(false);
-        }, 1000);   
-    
+        }, 1000);
+
         window.removeEventListener("wheel", handleFakeScroll, { passive: false });
         window.removeEventListener("touchstart", handleTouchStart);
         window.removeEventListener("touchmove", handleTouchMove);
       }
-    
-      if (scrollDirection === 'up' && scrollFraction < 0.1 && zoomStarted) {
+
+      if (scrollDirection === "up" && scrollFraction < 0.1 && zoomStarted) {
         setZoomStarted(false);
-      }      
-    };    
+      }
+    };
 
     let ticking = false;
 
     const handleFakeScroll = (e) => {
-      if (!introEl || !textEl || !scrollLocked) return;
+      if (!introEl || !scrollLocked) return;
       e.preventDefault();
 
       fakeScrollY = Math.max(0, fakeScrollY + e.deltaY);
       const scrollFraction = Math.min(fakeScrollY / targetScrollDistance, 1);
-      const scrollDirection = fakeScrollY < prevScrollY.current ? 'up' : 'down';
+      const scrollDirection =
+        fakeScrollY < prevScrollY.current ? "up" : "down";
       prevScrollY.current = fakeScrollY;
 
       if (!ticking) {
@@ -332,14 +346,12 @@ useEffect(() => {
       const deltaY = touchStartY - currentY;
       fakeScrollY = Math.max(0, fakeScrollY + deltaY);
       touchStartY = currentY;
-    
+
       const scrollFraction = Math.min(fakeScrollY / targetScrollDistance, 1);
       updateZoom(scrollFraction);
-    };    
-    
-    if (autoCompleteIntro && scrollLocked) { // reload mid page fix
-      const textEl = textRef.current;
+    };
 
+    if (autoCompleteIntro && scrollLocked) {
       if (textEl) {
         textEl.style.transform = "scale(1000)";
         textEl.style.transition = "transform 0.1s ease-out";
@@ -348,6 +360,7 @@ useEffect(() => {
       setShowNavbar(true);
       setScrollLocked(false);
       setZoomStarted(true);
+      setIntroComplete(true);
       document.body.style.overflow = "";
 
       window.removeEventListener("wheel", handleFakeScroll);
@@ -369,7 +382,8 @@ useEffect(() => {
     };
   }, [scrollLocked, zoomStarted, setShowNavbar, autoCompleteIntro]);
 
-  useEffect(() => { // intro animation reset when scrolling back up
+  useEffect(() => {
+    // intro animation reset when scrolling back up
     if (!zoomStarted) return;
 
     let lastScrollY = window.scrollY;
@@ -385,71 +399,76 @@ useEffect(() => {
         if (textEl) {
           textEl.style.transition = "none";
           textEl.style.transform = "scale(201)";
-      
+
           requestAnimationFrame(() => {
             textEl.style.transition = "transform 0.3s ease-out";
             textEl.style.transform = "scale(1)";
           });
         }
-      
+
         setScrollLocked(true);
         setZoomStarted(false);
         setShowNavbar(false);
+        setIntroComplete(false);
+        setEnableSnake(true);
       }
     };
     window.addEventListener("scroll", handleScrollBack);
     return () => window.removeEventListener("scroll", handleScrollBack);
-  }, [zoomStarted, setShowNavbar]);
+  }, [zoomStarted, setShowNavbar, setScrollLocked, setIntroComplete, setEnableSnake]);
 
-  useEffect(() => { // resolve mid page loading intro issue
+  useEffect(() => {
+    // resolve mid page loading intro issue
     const timeout = setTimeout(() => {
       if (scrollLocked && window.scrollY > 100) {
         const textEl = textRef.current;
-        
-        if (textEl) {
-          textEl.style.transform = "scale(1000)";
-        }
 
         setShowNavbar(true);
         setScrollLocked(false);
         setZoomStarted(true);
+        setIntroComplete(true);
+        setEnableSnake(false);
         document.body.style.overflow = "";
       }
     }, 1000);
-  
+
     return () => clearTimeout(timeout);
   }, []);
 
   return (
-    <div className="intro-container" ref={introRef}>
+    <div
+      className={`intro-container ${introComplete ? "intro-complete" : ""}`}
+      ref={introRef}
+    >
       <div className="snake-background">
-        {enableSnake && <canvas ref={canvasRef} />} 
+        {enableSnake && <canvas ref={canvasRef} />}
         <div className="glass-overlay" />
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        style={{ position: "relative", zIndex: 2 }}
-      >
-        <h1 className="intro-text zooming-text" ref={textRef}>
-          {zoomStarted ? (
-            "Hello, I'm Josh."
-          ) : (
-            <ReactTyped
-              strings={["Hello, I'm Josh.", ""]}
-              typeSpeed={80}
-              backSpeed={50}
-              backDelay={2000}
-              loop
-            />
-          )}
-        </h1>
-      </motion.div>
+      {!introComplete && (
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          style={{ position: "relative", zIndex: 2 }}
+        >
+          <h1 className="intro-text zooming-text" ref={textRef}>
+            {zoomStarted ? (
+              "Hello, I'm Josh."
+            ) : (
+              <ReactTyped
+                strings={["Hello, I'm Josh.", ""]}
+                typeSpeed={80}
+                backSpeed={50}
+                backDelay={2000}
+                loop
+              />
+            )}
+          </h1>
+        </motion.div>
+      )}
     </div>
   );
 }
 
 export default Intro;
-

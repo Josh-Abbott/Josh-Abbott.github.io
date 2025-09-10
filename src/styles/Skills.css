@@ -7,27 +7,14 @@
     overflow: hidden;
     background: transparent;
     padding: 0;
-}
-  
-.skills-scrolling-wrapper::before,
-.skills-scrolling-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-    }
-
-.skills-scrolling-wrapper::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(79, 103, 150, 0.9), transparent);
-}
-
-.skills-scrolling-wrapper::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(79, 103, 150, 0.9), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: left top;
+    -webkit-mask-size: 100% 100%;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-repeat: no-repeat;
+    mask-position: left top;
+    mask-size: 100% 100%;
 }
 
 .skills-scrolling-container {

@@ -12,6 +12,10 @@
   transition: background-color 0.3s ease;
 }
 
+.intro-container.intro-complete {
+  background: #4f6796;
+}
+
 .zooming-text {
   transition: transform 0.1s ease-out;
   will-change: transform;
@@ -49,6 +53,12 @@
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1;
+  transition: background 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+.intro-container.intro-complete .glass-overlay {
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .intro-text, .intro-text * {
