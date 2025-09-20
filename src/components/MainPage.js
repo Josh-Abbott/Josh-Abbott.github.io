@@ -46,6 +46,9 @@ function MainPage({setShowNavbar }) {
     // If navigating directly to a section (via navbar click), force intro completion
     if (location.hash) {
       setAutoCompleteIntro(true);
+
+      const timer = setTimeout(() => setAutoCompleteIntro(false), 1000);
+      return () => clearTimeout(timer);
     }
   }, [location]);
 
