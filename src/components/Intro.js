@@ -10,12 +10,13 @@ const SPEED = 75;
 const INITIAL_SNAKE = [[10, 10], [9, 10], [8, 10]];
 
 const generateRandomTarget = () => {
-  const buffer = 6;
+  const bufferX = 6;
   return [
-    Math.floor(Math.random() * (GRID_WIDTH - 2 * buffer)) + buffer,
-    Math.floor(Math.random() * (GRID_HEIGHT - 2 * buffer)) + buffer,
+    Math.floor(Math.random() * (GRID_WIDTH - 2 * bufferX)) + bufferX,
+    Math.floor(Math.random() * GRID_HEIGHT),
   ];
 };
+
 
 function Intro({ setShowNavbar, autoCompleteIntro }) {
   const canvasRef = useRef(null);
@@ -31,11 +32,9 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
   const [zoomStarted, setZoomStarted] = useState(false);
   const prevScrollY = useRef(0);
 
-  const lastUpdateTimeRef = useRef(0);
-  const animationFrameIdRef = useRef();
-
   const [introComplete, setIntroComplete] = useState(false);
   const [enableSnake, setEnableSnake] = useState(true);
+  const [blurEnabled, setBlurEnabled] = useState(true);
 
   const getTarget = () => targetRef.current;
 
@@ -79,6 +78,21 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
     return null;
   };
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    if (blurEnabled) {
+      canvas.style.setProperty("--snake-blur", "6px");
+      canvas.style.setProperty("--snake-sat", "120%");
+      canvas.style.setProperty("--snake-opacity", "0.6");
+    } else {
+      canvas.style.setProperty("--snake-blur", "0px");
+      canvas.style.setProperty("--snake-sat", "100%");
+      canvas.style.setProperty("--snake-opacity", "0.35");
+    }
+  }, [blurEnabled, enableSnake]);
+
   // performance testing, might add for zoom
   useEffect(() => {
     let frameCount = 0;
@@ -96,11 +110,12 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
           navigator.hardwareConcurrency &&
           navigator.hardwareConcurrency < 4;
 
-        if (fps < 40 || lowMemory || lowThreads) {
-          setEnableSnake(false);
+        if (fps < 45 || lowMemory || lowThreads) {
+          setBlurEnabled(false); // no blur completely
         } else {
-          setEnableSnake(true);
+          setBlurEnabled(true);
         }
+
       }
     };
 
@@ -118,28 +133,42 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
     let isResetting = false;
 
     const updateCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const cssWidth = canvas.clientWidth;
+      const cssHeight = canvas.clientHeight;
 
-      const gridWidthPx = GRID_WIDTH * CELL_SIZE;
-      const gridHeightPx = GRID_HEIGHT * CELL_SIZE;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
 
-      offsetRef.current = {
-        x: (canvas.width - gridWidthPx) / 2,
-        y: (canvas.height - gridHeightPx) / 2,
-      };
+      const displayWidth = Math.floor(cssWidth * dpr);
+      const displayHeight = Math.floor(cssHeight * dpr);
+
+      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
     };
 
-    const fadeCanvas = async (fadeOut = true) => {
-      return new Promise((resolve) => {
-        const duration = 600;
-        canvas.style.transition = `opacity ${duration}ms ease-in-out`;
-        canvas.style.opacity = fadeOut ? 0 : 1;
-        setTimeout(() => resolve(), duration);
-      });
-    };
+    function triggerReset() {
+      isResetting = true;
+      canvas.style.opacity = 0;
 
-     const moveSnake = async () => {
+      setTimeout(() => {
+        snakeRef.current = [...INITIAL_SNAKE];
+        targetRef.current = generateRandomTarget();
+        pathRef.current = [];
+        growAmountRef.current = 0;
+        targetsEaten = 0;
+
+        canvas.style.opacity = 1;
+
+        setTimeout(() => {
+          isResetting = false;
+        }, 600);
+      }, 600);
+    }
+
+
+    function stepSnake() {
       if (isResetting) return;
 
       const snake = snakeRef.current;
@@ -159,7 +188,7 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
       snake.unshift([nextX, nextY]);
 
       if (growAmountRef.current > 0) {
-        growAmountRef.current -= 1;
+        growAmountRef.current--;
       } else {
         snake.pop();
       }
@@ -181,50 +210,21 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
         if (newPath) pathRef.current = newPath.slice(1);
       }
 
-      if (targetsEaten >= 6) {
-        isResetting = true;
-        await fadeCanvas(true);
-
-        snakeRef.current = [...INITIAL_SNAKE];
-        targetRef.current = generateRandomTarget();
-        pathRef.current = [];
-        growAmountRef.current = 0;
-        targetsEaten = 0;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // redraw (fading in)
-        const offset = offsetRef.current;
-        for (let [x, y] of snakeRef.current) {
-          ctx.fillStyle = "rgba(79, 103, 150, 0.6)";
-          ctx.fillRect(
-            offset.x + x * CELL_SIZE,
-            offset.y + y * CELL_SIZE,
-            CELL_SIZE,
-            CELL_SIZE
-          );
-        }
-        const [tx, ty] = getTarget();
-        ctx.strokeStyle = "#4f6796";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(
-          offset.x + tx * CELL_SIZE,
-          offset.y + ty * CELL_SIZE,
-          CELL_SIZE,
-          CELL_SIZE
-        );
-
-        await fadeCanvas(false);
-        isResetting = false;
-        return;
+      if (targetsEaten >= 6 && !isResetting) {
+        triggerReset();
       }
+    }
 
-      // drawing the snake
+    function drawSnake() {
       const offset = offsetRef.current;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (let [x, y] of snake) {
-        ctx.fillStyle = "rgba(79, 103, 150, 0.6)";
+      ctx.fillStyle = "#f9f9f9";
+      ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+
+      for (let [x, y] of snakeRef.current) {
+        const opacity = blurEnabled ? 0.6 : 0.35;
+        ctx.fillStyle = `rgba(79, 103, 150, ${opacity})`;
+
         ctx.fillRect(
           offset.x + x * CELL_SIZE,
           offset.y + y * CELL_SIZE,
@@ -242,25 +242,39 @@ function Intro({ setShowNavbar, autoCompleteIntro }) {
         CELL_SIZE,
         CELL_SIZE
       );
-    };
+    }
 
-    const gameLoop = (timestamp) => {
-      if (timestamp - lastUpdateTimeRef.current >= SPEED) {
-        lastUpdateTimeRef.current = timestamp;
-        moveSnake();
-      }
-      animationFrameIdRef.current = requestAnimationFrame(gameLoop);
-    };
+    let logicTimerId;
+    let rafId;
+
+    function startLoops() {
+      if (logicTimerId || rafId) return;
+      logicTimerId = setInterval(() => {
+        stepSnake();
+      }, SPEED);
+
+      const renderLoop = () => {
+        drawSnake();
+        rafId = requestAnimationFrame(renderLoop);
+      };
+
+      rafId = requestAnimationFrame(renderLoop);
+    }
+
 
     updateCanvasSize();
     window.addEventListener("resize", updateCanvasSize);
+
     canvas.style.opacity = 1;
     canvas.style.transition = "opacity 0.5s ease-in-out";
 
-    animationFrameIdRef.current = requestAnimationFrame(gameLoop);
+    startLoops();
 
     return () => {
-      cancelAnimationFrame(animationFrameIdRef.current);
+      clearInterval(logicTimerId);
+      cancelAnimationFrame(rafId);
+      logicTimerId && clearInterval(logicTimerId);
+      rafId && cancelAnimationFrame(rafId);
       window.removeEventListener("resize", updateCanvasSize);
     };
   }, [enableSnake]);

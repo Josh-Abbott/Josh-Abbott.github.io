@@ -61,7 +61,7 @@ const projectsData = [
     },
     {
       id: 6,
-      title: "CougCorner Website",
+      title: "CougCorner",
       category: "software",
       content: [
         { type: "text", value: "•	This project is under active development, more will be added in the near future!" },
