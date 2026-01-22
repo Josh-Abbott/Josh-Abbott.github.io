@@ -125,6 +125,15 @@ const projectsData = [
         { type: "text", value: '• Featured in a YouTube <a href="https://youtu.be/sRmf9KEqbLg" target="_blank" rel="noopener noreferrer">video</a> by a Spanish creator with 4.2M+ views and 65,000+ likes.' }
       ],
     },
+    {
+      id: 10,
+      title: "Prototypes",
+      category: "game",
+      content: [
+        { type: "video", value: "../videos/uiprototype.mp4", alt: "Prototype 1 recording." },
+        { type: "focused-text", value: "All content showcased is from a work-in-progress build and not final." },
+      ],
+    },
   ];
   
   export default projectsData;
