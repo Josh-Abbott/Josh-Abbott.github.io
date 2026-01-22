@@ -1,29 +1,30 @@
 section {
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    background-color: inherit;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  background-color: inherit;
 }
 
 .fade-in-section {
-    filter: blur(4px);
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
-    will-change: opacity, transform, filter;
-  }
-  
-  .fade-in-section.visible {
-    filter: blur(0);
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+
+@media (max-width: 1025px) {
+  .fade-in-section {
+    transition: none;
+    filter: none;
     opacity: 1;
-    transform: scale(1);
+    transform: none;
   }
-  
-  @media (max-width: 1025px) {
-    .fade-in-section {
-      transition: none;
-      filter: none;
-      opacity: 1;
-      transform: none;
-    }
-  }
+}
