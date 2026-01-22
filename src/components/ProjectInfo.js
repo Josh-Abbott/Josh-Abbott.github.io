@@ -9,6 +9,7 @@ function ProjectInfo({ setShowNavbar }) {
 
   useEffect(() => {
     setShowNavbar(true); // make sure navbar is shown here
+    window.scrollTo(0, 0); // make sure at top of page
   }, [setShowNavbar]);
 
   if (!project) {
