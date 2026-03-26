@@ -61,11 +61,11 @@ const projectsData = [
     },
     {
       id: 6,
-      title: "CougCorner",
+      title: "The After Dark",
       category: "software",
       content: [
         { type: "text", value: "•	This project is under active development, more will be added in the near future!" },
-        { type: "text", value: 'Check out the <a href="https://github.com/Josh-Abbott/CougCorner" target="_blank" rel="noopener noreferrer">GitHub repository</a> for this project.' },
+        { type: "text", value: 'Check out the <a href="https://github.com/Josh-Abbott/TheAfterDark" target="_blank" rel="noopener noreferrer">GitHub repository</a> for this project.' },
       ],
     },
     {
