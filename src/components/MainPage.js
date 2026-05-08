@@ -76,6 +76,7 @@ function MainPage({setShowNavbar }) {
         </section>
         
         <section className="fade-in-section" id="projects">
+          <Projects title="Data Projects" category="data" />
           <Projects title="Software Projects" category="software" />
           <Projects title="Game Projects" category="game" />
         </section>

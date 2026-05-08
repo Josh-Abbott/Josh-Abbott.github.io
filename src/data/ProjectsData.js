@@ -26,7 +26,7 @@ const projectsData = [
     {
       id: 3,
       title: "Yelp Data Search Application",
-      category: "software",
+      category: "data",
       content: [
         { type: "text", value: "• Created a Python application to query and analyze large-scale Yelp data using PostgreSQL, implementing JSON parsing, database schema design, and query optimization strategies to provide location-based business insights." },
         { type: "text", value: "• Designed and implemented popularity and success ranking algorithms for businesses, using custom metrics such as check-in patterns, review consistency, and business longevity." },
@@ -37,7 +37,7 @@ const projectsData = [
     {
       id: 4,
       title: "Location Data Analysis",
-      category: "software",
+      category: "data",
       content: [
         { type: "text", value: "•	Engineered a scalable pipeline to efficiently process and analyze over 13,000 Google Location History JSON entries using Python, R, and SQL alongside a teammate. " },
         { type: "text", value: "•	Implemented custom extraction, data cleaning, and confidence-based filtering logic to aggregate high-quality data into a structured SQLite database. " },
@@ -62,7 +62,7 @@ const projectsData = [
     {
       id: 6,
       title: "The After Dark",
-      category: "software",
+      category: "data",
       content: [
         { type: "text", value: "•	This project is under active development, more will be added in the near future!" },
         { type: "text", value: 'Check out the <a href="https://github.com/Josh-Abbott/TheAfterDark" target="_blank" rel="noopener noreferrer">GitHub repository</a> for this project.' },
