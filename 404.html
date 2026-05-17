@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found</title>
+    <script>
+      fetch('/index.html')
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(html) {
+          document.open();
+          document.write(html);
+          document.close();
+        })
+        .catch(function() {
+          document.body.innerHTML = '<h1>Page not found</h1><p>Please return to the <a href="/">home page</a>.</p>';
+        });
+    </script>
+  </head>
+  <body>
+    <noscript>
+      JavaScript is required to run this app. Please enable JavaScript and reload the page.
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>
