@@ -140,7 +140,7 @@ const projectsData = [
       category: "data",
       content: [
         { type: "image", value: "../images/recruitvis.png", alt: "Tableau visualization screenshot." },
-        { type: "focused-text", value: 'You can find the interactive dashboard <a href="https://public.tableau.com/views/EvolutionofWSUFootballRecruitingGeography2002-2026/EvolutionofWashingtonStateFootballRecruitingGeography20022026?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener noreferrer">here</a>.' },
+        { type: "focused-text", value: 'You can find the interactive dashboard <a href="https://public.tableau.com/views/EvolutionofWashingtonStateFootballRecruitingGeography20022026_v2025_3/EvolutionofWashingtonStateFootballRecruitingGeography20022026?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener noreferrer">here</a>.' },
         { type: "text", value: "• Interactive Tableau dashboard analyzing how Washington State football recruiting geography evolved across coaching eras from 2002–2026. Includes geospatial analysis, calculated recruiting share metrics, interactive filtering, and temporal trend analysis using data from CollegeFootballData.com." },
         { type: "text", value: "• Visualized recruiting patterns and trends across 20+ years, revealing insights into how coaching changes impacted recruiting focus and geographic reach." },
       ],
