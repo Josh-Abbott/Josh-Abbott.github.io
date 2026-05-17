@@ -15,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage setShowNavbar={setShowNavbar} />} />
           <Route path="/projects/:projectId" element={<ProjectInfo setShowNavbar={setShowNavbar} />} />
+          <Route path="*" element={<div className="page-not-found">Page not found.</div>} />
         </Routes>
       </div>
     </Router>
